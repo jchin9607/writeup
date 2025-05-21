@@ -68,6 +68,8 @@ const Hero = ({
             alt={image.alt}
             width={500}
             height={500}
+            priority
+            loading="eager"
             className="max-h-93 w-full rounded-md object-cover"
           />
         </div>
