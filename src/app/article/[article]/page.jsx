@@ -84,6 +84,8 @@ export default async function page({ params }) {
                   height={800}
                   priority
                   loading="eager"
+                  placeholder="blur"
+                  blurDataURL="/blur.jpg"
                   className="mt-0 mb-8 aspect-video w-full rounded-lg object-cover"
                 />
               </div>

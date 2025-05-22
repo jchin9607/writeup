@@ -124,6 +124,8 @@ export default async function Feed() {
                       alt={post.title}
                       width={800}
                       height={600}
+                      placeholder="blur"
+                      blurDataURL="/blur.jpg"
                       className="h-full w-full object-cover transition-opacity duration-200 fade-in hover:opacity-70"
                     />
                   </div>
