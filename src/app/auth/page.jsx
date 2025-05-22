@@ -18,8 +18,8 @@ export default async function LoginPage() {
       <div className="relative hidden bg-muted lg:block">
         <Image
           src="/auth.jpg"
-          width={600}
-          height={600}
+          width={1920}
+          height={2560}
           priority
           loading="eager"
           alt="Image"
