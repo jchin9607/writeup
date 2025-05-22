@@ -1,3 +1,5 @@
+"use cache";
+
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import ProfileToggleSection from "@/components/profile-toggle-section";
