@@ -24,13 +24,11 @@ const fetchArticleData = async (articleId) => {
     // Convert Firestore date object to a serializable format
     const date = docData.date.toDate();
 
-    const sanitized = DOMPurify.sanitize(docData.content);
-
     // Return a plain JavaScript object with all data serialized properly
     return {
       ...docData,
       date: date.toDateString(),
-      content: sanitized,
+
       // Handle any other non-serializable fields here if needed
     };
   } else {
@@ -47,9 +45,9 @@ export default async function page({ params }) {
   const param = await params;
   const articleId = decodeURIComponent(param.article);
 
-  const filteredId = articleId.replace("%6", " ");
+  const articleData = await fetchArticleData(articleId);
 
-  const articleData = await fetchArticleData(filteredId);
+  const sanitizedContent = DOMPurify.sanitize(articleData.content);
 
   return (
     <div className=" flex justify-center w-full px-[5%] ">
@@ -78,18 +76,20 @@ export default async function page({ params }) {
                   alt="placeholder"
                   className="mt-0 mb-8 aspect-video w-full rounded-lg object-cover"
                 /> */}
-                <ArticleInteractBar data={articleData} id={filteredId} />
+                <ArticleInteractBar data={articleData} id={articleId} />
                 <Image
                   src={`${articleData.cover}`}
                   alt="placeholder"
                   width={1000}
                   height={800}
+                  priority
+                  loading="eager"
                   className="mt-0 mb-8 aspect-video w-full rounded-lg object-cover"
                 />
               </div>
               <div
                 className="prose prose-sm sm:prose lg:prose-lg dark:prose-invert w-full"
-                dangerouslySetInnerHTML={{ __html: articleData.content }}
+                dangerouslySetInnerHTML={{ __html: sanitizedContent }}
               ></div>
             </article>
           </div>
