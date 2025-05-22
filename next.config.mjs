@@ -22,9 +22,6 @@ const nextConfig = {
         hostname: "firebasestorage.googleapis.com",
       },
       {
-        hostname: "a.fsdn.com",
-      },
-      {
         hostname: "github.com",
       },
       {
