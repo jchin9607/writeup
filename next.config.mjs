@@ -8,6 +8,8 @@ const nextConfig = {
   bundlePagesRouterDependencies: true,
   experimental: {
     useCache: true,
+    dynamicIO: true,
+    ppr: true,
   },
   images: {
     remotePatterns: [
