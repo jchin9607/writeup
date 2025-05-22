@@ -21,14 +21,14 @@ const Hero = ({
     },
   },
   image = {
-    src: "https://www.shadcnblocks.com/images/block/placeholder-1.svg",
+    src: "/newspapers.jpg",
     alt: "Hero section demo image showing interface components",
   },
 }) => {
   return (
-    <section className="py-32 ">
-      <div className="container">
-        <div className="grid items-center gap-8 lg:grid-cols-2">
+    <section className="py-32 h-full">
+      <div className="container h-full">
+        <div className="grid items-center gap-8 lg:grid-cols-2 h-full">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
             {badge && (
               <Badge variant="outline">

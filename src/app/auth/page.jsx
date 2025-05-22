@@ -1,6 +1,7 @@
 import { LoginForm } from "../components/login-form";
 import { Suspense } from "react";
 import Loading from "../components/Loading";
+import Image from "next/image";
 
 export default async function LoginPage() {
   return (
@@ -15,8 +16,12 @@ export default async function LoginPage() {
         </div>
       </div>
       <div className="relative hidden bg-muted lg:block">
-        <img
-          src="/placeholder.svg"
+        <Image
+          src="/placeholder.jpg"
+          width={600}
+          height={600}
+          priority
+          loading="eager"
           alt="Image"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
