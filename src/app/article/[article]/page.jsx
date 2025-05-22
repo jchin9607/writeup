@@ -14,8 +14,6 @@ export default async function page({ params }) {
 
   const articleId = decodeURIComponent(param.article);
 
-  await connection();
-
   const articleData = await fetchArticleData(articleId);
 
   const sanitizedContent = DOMPurify.sanitize(articleData.content);
