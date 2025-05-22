@@ -5,6 +5,7 @@ const nextConfig = {
       fullUrl: true,
     },
   },
+  bundlePagesRouterDependencies: true,
   experimental: {
     useCache: true,
   },
