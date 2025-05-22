@@ -22,12 +22,11 @@ const fetchArticleData = async (articleId) => {
     const docData = docSnap.data();
 
     // Convert Firestore date object to a serializable format
-    const date = docData.date.toDate();
 
     // Return a plain JavaScript object with all data serialized properly
     return {
       ...docData,
-      date: date.toDateString(),
+      date: docData.date.toDate().toDateString(),
 
       // Handle any other non-serializable fields here if needed
     };
@@ -43,6 +42,7 @@ const fetchArticleData = async (articleId) => {
 
 export default async function page({ params }) {
   const param = await params;
+
   const articleId = decodeURIComponent(param.article);
 
   const articleData = await fetchArticleData(articleId);
