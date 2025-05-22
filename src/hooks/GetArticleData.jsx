@@ -11,7 +11,12 @@ const fetchArticleData = async (articleId) => {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    const docData = docSnap.data();
+    let docData;
+    try {
+      docData = docSnap.data();
+    } catch (e) {
+      throw new Error(e);
+    }
 
     // Convert Firestore date object to a serializable format
 
