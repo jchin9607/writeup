@@ -6,13 +6,15 @@ import Image from "next/image";
 import ArticleInteractBar from "@/app/components/ArticleInteractBar";
 import DOMPurify from "isomorphic-dompurify";
 import Author from "./Author";
-
+import { connection } from "next/server";
 import fetchArticleData from "@/hooks/GetArticleData";
 
 export default async function page({ params }) {
   const param = await params;
 
   const articleId = decodeURIComponent(param.article);
+
+  await connection();
 
   const articleData = await fetchArticleData(articleId);
 
