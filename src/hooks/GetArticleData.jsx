@@ -24,6 +24,7 @@ const fetchArticleData = async (articleId) => {
     return {
       ...docData,
       date: docData.date.toDate().toDateString(),
+      id: docSnap.id,
 
       // Handle any other non-serializable fields here if needed
     };

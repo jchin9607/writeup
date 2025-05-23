@@ -9,25 +9,55 @@ import { Button } from "@/components/ui/button";
 import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
 import "./styles.css";
-import { useCallback } from "react";
 import Youtube from "@tiptap/extension-youtube";
 import { BubbleMenu, FloatingMenu } from "@tiptap/react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-const MenuBar = () => {
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/firebase/firebase";
+import DOMPurify from "isomorphic-dompurify";
+import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/firebase";
+import { useRouter } from "next/navigation";
+import { doc } from "firebase/firestore";
+import { updateDoc } from "firebase/firestore";
+import RefreshData from "@/hooks/RefreshData";
+import { storage } from "@/firebase/firebase";
+import { uploadBytes, getDownloadURL, ref } from "firebase/storage";
+
+const MenuBar = ({ saved, data }) => {
   const { editor } = useCurrentEditor();
+  const [title, setTitle] = useState(data?.title || "");
+  const [description, setDescription] = useState(data?.description || "");
+  const [user] = useAuthState(auth);
+  const [cover, setCover] = useState(data?.cover || null);
+  const router = useRouter();
+
+  if (saved) {
+    if (!data) {
+      return null;
+    }
+    if (data?.author !== user?.uid) {
+      return null;
+    }
+  }
+
+  if (data?.draft === false) {
+    return null;
+  }
 
   if (!editor) {
     return null;
   }
 
-  const addImage = useCallback(() => {
+  const addImage = () => {
     const url = window.prompt("URL");
 
     if (url) {
       editor.chain().focus().setImage({ src: url }).run();
     }
-  }, [editor]);
+  };
 
   const addYoutubeVideo = () => {
     const url = window.prompt("Enter YouTube URL");
@@ -41,11 +71,120 @@ const MenuBar = () => {
     }
   };
 
+  async function save() {
+    try {
+      if (!saved) {
+        const content = DOMPurify.sanitize(editor.getHTML());
+        const docRef = collection(db, "articles");
+
+        const userId = user?.uid;
+        if (!userId) {
+          throw new Error("User not found");
+        }
+
+        const returned = await addDoc(docRef, {
+          content: content,
+          title: title || "Untitled",
+          author: userId,
+          date: new Date(),
+          draft: true,
+          description: description || "No description",
+          cover: null,
+          tags: [],
+          likes: [],
+          likeCount: 0,
+          comments: [],
+        });
+
+        router.push("/write/" + returned.id);
+      } else if (saved) {
+        const content = DOMPurify.sanitize(editor.getHTML());
+
+        const docRef = doc(db, "articles", data.id);
+        await updateDoc(docRef, {
+          content: content,
+          title: title || "Untitled",
+          description: description || "No description",
+          cover: cover || null,
+          date: new Date(),
+          draft: true,
+        });
+
+        RefreshData(data.id);
+
+        window.prompt("Saved");
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async function publish() {
+    const content = DOMPurify.sanitize(editor.getHTML());
+    if (
+      title === "" ||
+      description === "" ||
+      content.length < 700 ||
+      cover === null
+    ) {
+      window.prompt(
+        "Please add either a title, description, cover image or have more than 700 characters "
+      );
+      return;
+    }
+
+    const docRef = doc(db, "articles", data.id);
+    await updateDoc(docRef, {
+      content: content,
+      title: title,
+      description: description,
+      cover: cover,
+      date: new Date(),
+      draft: false,
+    });
+
+    RefreshData(data.id);
+
+    router.push("/article/" + data.id);
+  }
+
+  function addCoverImage(cover) {
+    if (cover.size > 1000000) {
+      window.prompt("image must be less than 1mb");
+      return;
+    }
+
+    const coverRef = ref(storage, "cover/" + data?.id);
+    uploadBytes(coverRef, cover)
+      .then(() => {
+        getDownloadURL(coverRef)
+          .then((url) => {
+            setCover(url);
+            window.prompt("Cover image added, click save to save changes");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <>
       <div className="w-full pb-20 flex flex-col gap-5">
-        <Input placeholder="Title" className="w-full" />
-        <Textarea placeholder="Description" />
+        <Input
+          placeholder="Title"
+          className="w-full"
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+        />
+        <Textarea
+          placeholder="Description"
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+        />
       </div>
       {editor && (
         <BubbleMenu editor={editor}>
@@ -208,6 +347,21 @@ const MenuBar = () => {
           </Button>
           <Button onClick={addImage}>Add Photo</Button>
           <Button onClick={addYoutubeVideo}>Add Youtube Video</Button>
+          <Button onClick={save}>Save</Button>
+          {saved && <Button onClick={publish}>Publish</Button>}
+          <input
+            id="addImage"
+            type="file"
+            onChange={(event) => addCoverImage(event.target.files[0])}
+            hidden
+            accept="image/*"
+          />
+          {saved && (
+            <Button asChild>
+              <label htmlFor="addImage">Set Cover Image</label>
+            </Button>
+          )}
+          {saved && cover !== null && <p>Cover Image Added</p>}
         </div>
       </div>
     </>
@@ -267,13 +421,13 @@ const content = `
 </blockquote>
 `;
 
-export default () => {
+const Edit = ({ saved, data }) => {
   return (
     <EditorProvider
-      slotBefore={<MenuBar />}
+      slotBefore={<MenuBar saved={saved} data={data} />}
       extensions={extensions}
       immediatelyRender={false}
-      content={content}
+      content={data?.content || content}
       editorProps={{
         attributes: {
           class:
@@ -283,3 +437,5 @@ export default () => {
     ></EditorProvider>
   );
 };
+
+export default Edit;

@@ -6,7 +6,6 @@ import Image from "next/image";
 import ArticleInteractBar from "@/app/components/ArticleInteractBar";
 import DOMPurify from "isomorphic-dompurify";
 import Author from "./Author";
-import { connection } from "next/server";
 import fetchArticleData from "@/hooks/GetArticleData";
 
 export default async function page({ params }) {
