@@ -18,7 +18,11 @@ const NavbarSignedOut = () => {
         </Button>
       )}
       {user && (
-        <Link href="/write" className="flex items-center hover:underline">
+        <Link
+          href="/write"
+          className="flex items-center hover:underline"
+          prefetch={false}
+        >
           <SquarePen />
         </Link>
       )}
