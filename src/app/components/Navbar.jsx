@@ -15,7 +15,7 @@ const Navbar = async () => {
       <Link href="/" className={mono.className}>
         <h1 className="text-2xl">writeup.</h1>
       </Link>
-      <div className="flex gap-7">
+      <div className="flex items-center gap-7">
         <NavbarSignedOut />
         <ProfileControl />
         <ThemeToggle />

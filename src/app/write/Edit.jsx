@@ -25,6 +25,7 @@ import { updateDoc } from "firebase/firestore";
 import RefreshData from "@/hooks/RefreshData";
 import { storage } from "@/firebase/firebase";
 import { uploadBytes, getDownloadURL, ref } from "firebase/storage";
+import { TagInput } from "emblor";
 
 const MenuBar = ({ saved, data }) => {
   const { editor } = useCurrentEditor();
@@ -32,6 +33,8 @@ const MenuBar = ({ saved, data }) => {
   const [description, setDescription] = useState(data?.description || "");
   const [user] = useAuthState(auth);
   const [cover, setCover] = useState(data?.cover || null);
+  const [tags, setTags] = useState(data?.tags || []);
+  const [tagIndex, setTagIndex] = useState(null);
   const router = useRouter();
 
   if (saved) {
@@ -90,7 +93,7 @@ const MenuBar = ({ saved, data }) => {
           draft: true,
           description: description || "No description",
           cover: null,
-          tags: [],
+          tags: tags || [],
           likes: [],
           likeCount: 0,
           comments: [],
@@ -105,6 +108,7 @@ const MenuBar = ({ saved, data }) => {
           content: content,
           title: title || "Untitled",
           description: description || "No description",
+          tags: tags || [],
           cover: cover || null,
           date: new Date(),
           draft: true,
@@ -140,6 +144,7 @@ const MenuBar = ({ saved, data }) => {
       description: description,
       cover: cover,
       date: new Date(),
+      tags: tags || [],
       draft: false,
     });
 
@@ -171,6 +176,22 @@ const MenuBar = ({ saved, data }) => {
       });
   }
 
+  function handleSetTags(body) {
+    const tags = body.map((tag) =>
+      tag.text
+        .replace(/[`~!@#$%^&*()|+\=?;:'",<>\{\}\[\]\\\/\s]/gi, "")
+        .toLowerCase()
+    );
+    setTags(tags);
+  }
+
+  const formatedTags = tags.map((tag, index) => {
+    return {
+      id: index,
+      text: tag,
+    };
+  });
+
   return (
     <>
       <div className="w-full pb-20 flex flex-col gap-5">
@@ -184,6 +205,21 @@ const MenuBar = ({ saved, data }) => {
           placeholder="Description"
           onChange={(e) => setDescription(e.target.value)}
           value={description}
+        />
+        <TagInput
+          placeholder="add tags"
+          tags={formatedTags}
+          setTags={(x) => handleSetTags(x)}
+          activeTagIndex={tagIndex}
+          setActiveTagIndex={(x) => setTagIndex(x)}
+          maxLength={20}
+          maxTags={5}
+          styleClasses={{
+            input: "w-full h-10",
+            tag: {
+              body: "pl-3",
+            },
+          }}
         />
       </div>
       {editor && (

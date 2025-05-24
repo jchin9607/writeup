@@ -29,7 +29,6 @@ const ProfileControl = () => {
 
   useEffect(() => {
     if (user !== null) {
-      console.log("fetching");
       try {
         // const docRef = doc(db, "users", user.uid);
         // getDoc(docRef).then((docSnap) => {

@@ -45,6 +45,10 @@ export const fetchBlogs = async (id) => {
 const WrittenBlogs = async ({ id }) => {
   const blogs = await fetchBlogs(id);
 
+  if (blogs.length === 0) {
+    return null;
+  }
+
   return (
     <ProfileToggleSection title="Written Blogs">
       <div className="space-y-6">

@@ -15,7 +15,6 @@ import { useState } from "react";
 import CommentCard from "./CommentCard";
 import CommentsInput from "./CommentsInput";
 import { Button } from "@/components/ui/button";
-import { memo } from "react";
 
 const CommentsButton = ({ comments, user, id }) => {
   const [open, setOpen] = useState(false);

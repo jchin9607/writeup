@@ -33,7 +33,7 @@ import WrittenBlogs from "./WrittenBlogs";
 
 export default async function ProfilePage({ params }) {
   const param = await params;
-  const id = decodeURIComponent(param.id);
+  const id = decodeURIComponent(param?.id?.trim());
   const data = await fetchProfile(id);
 
   return (

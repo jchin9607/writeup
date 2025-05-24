@@ -33,7 +33,7 @@ const CommentCard = ({ comment }) => {
         </div>
         <div>
           <Link href={"/profile/" + comment.author}>
-            <p className="font-semibold">{author?.fullName}</p>
+            <p className="font-semibold">{author?.fullName || "loading"}</p>
           </Link>
           <p>{comment.comment}</p>
         </div>
