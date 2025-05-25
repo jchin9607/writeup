@@ -1,9 +1,9 @@
 "use cache";
 
-import { Github, Mail, MapPin, Twitter } from "lucide-react";
-import Image from "next/image";
+import { Github, MapPin, Twitter, Globe } from "lucide-react";
+
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
+
 import { Separator } from "@/components/ui/separator";
 import ProfileToggleSection from "@/components/profile-toggle-section";
 // import { db } from "@/firebase/firebase";
@@ -11,6 +11,7 @@ import ProfileToggleSection from "@/components/profile-toggle-section";
 import ProfileFollowSection from "@/app/components/ProfileFollowSection";
 import { fetchProfile } from "@/hooks/GetUserData";
 import WrittenBlogs from "./WrittenBlogs";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 // export const fetchProfile = async (id) => {
 //   "use cache";
@@ -42,13 +43,21 @@ export default async function ProfilePage({ params }) {
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <div className="relative h-24 w-24 rounded-full overflow-hidden border border-[#e6e6e6] dark:border-[#333]">
-            <Image
+            {/* <Image
               src={data?.photoURL}
               alt="Profile picture"
               width={96}
               height={96}
               className="object-cover"
-            />
+            /> */}
+            <Avatar className="h-24 w-24">
+              <AvatarImage
+                src={data?.photoURL}
+                alt="Avatar"
+                className="object-cover"
+              />
+              <AvatarFallback>LJ</AvatarFallback>
+            </Avatar>
           </div>
           <div>
             <h1 className="text-3xl font-bold">{data.fullName}</h1>
@@ -69,26 +78,26 @@ export default async function ProfilePage({ params }) {
         <div className="flex flex-wrap items-center gap-4 mb-8 text-sm text-[#6b7280] dark:text-[#a8a29e]">
           <div className="flex items-center gap-1">
             <MapPin size={16} />
-            <span>San Francisco, CA</span>
+            <span>{data?.location || "Private"}</span>
           </div>
           <div className="flex items-center gap-3">
             <Link
-              href={"mailto:" + data.email}
+              href={data?.website || ""}
               className="flex items-center gap-1 hover:text-[#37352f] dark:hover:text-[#e6e6e6] transition-colors"
-              aria-label="Email"
+              aria-label="Website"
             >
-              <Mail size={16} />
-              <span>{data.email}</span>
+              <Globe size={16} />
+              {/* <span>{data?.website || ""}</span> */}
             </Link>
             <Link
-              href="https://github.com"
+              href={data?.github || ""}
               className="hover:text-[#37352f] dark:hover:text-[#e6e6e6] transition-colors"
               aria-label="GitHub"
             >
               <Github size={16} />
             </Link>
             <Link
-              href="https://twitter.com"
+              href={data?.twitter || ""}
               className="hover:text-[#37352f] dark:hover:text-[#e6e6e6] transition-colors"
               aria-label="Twitter"
             >

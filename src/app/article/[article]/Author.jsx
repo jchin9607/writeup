@@ -11,7 +11,7 @@ export default async function Author({ articleData }) {
           <Avatar className="size-7 rounded-full">
             <AvatarImage
               src={authorData.photoURL}
-              alt="placeholder"
+              alt="Avatar"
               className="object-cover"
             />
           </Avatar>

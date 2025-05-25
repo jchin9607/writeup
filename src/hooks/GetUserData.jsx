@@ -13,7 +13,11 @@ export const fetchProfile = async (id) => {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    const docData = docSnap.data();
+    let docData = docSnap.data();
+    docData = {
+      ...docData,
+      lastUpdated: docData.lastUpdated?.seconds * 1000 || null,
+    };
     return docData;
   } else {
     console.log(

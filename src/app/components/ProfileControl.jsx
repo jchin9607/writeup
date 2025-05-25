@@ -62,7 +62,7 @@ const ProfileControl = () => {
               <AvatarImage
                 src={profilePic}
                 alt="@shadcn"
-                className="relative flex size-8 shrink-0 overflow-hidden rounded-full"
+                className="relative flex size-8 shrink-0 overflow-hidden rounded-full object-cover"
               />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>

@@ -129,10 +129,12 @@ const MenuBar = ({ saved, data }) => {
       title === "" ||
       description === "" ||
       content.length < 700 ||
-      cover === null
+      cover === null ||
+      description > 550 ||
+      tags.length > 7
     ) {
       window.prompt(
-        "Please add either a title, description, cover image or have more than 700 characters "
+        "Please add either a title, description under 550 characters, cover image or have more than 700 characters "
       );
       return;
     }
