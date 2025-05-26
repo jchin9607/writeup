@@ -128,9 +128,13 @@ export default function SettingsPage() {
 
   async function handleDeleteAccount() {
     if (window.confirm("Are you sure you want to delete your account?")) {
-      await deleteUser();
-      await signOut();
-      router.push("/");
+      try {
+        await deleteUser();
+        await signOut();
+        router.push("/");
+      } catch (error) {
+        window.prompt(error.message);
+      }
     }
   }
 
