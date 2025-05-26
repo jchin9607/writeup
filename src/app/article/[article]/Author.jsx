@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 import { fetchProfile } from "@/hooks/GetUserData";
 
@@ -10,14 +10,15 @@ export default async function Author({ articleData }) {
         <Link href={"/profile/" + articleData.author}>
           <Avatar className="size-7 rounded-full">
             <AvatarImage
-              src={authorData.photoURL}
+              src={authorData?.photoURL}
               alt="Avatar"
               className="object-cover"
             />
+            <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </Link>
         <div>
-          <h2 className="font-semibold">{authorData.fullName}</h2>
+          <h2 className="font-semibold">{authorData?.fullName}</h2>
           <p className="text-xs text-muted-foreground">{articleData.date}</p>
         </div>
       </div>
