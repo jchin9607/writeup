@@ -15,14 +15,14 @@ import RefreshData from "@/hooks/RefreshData";
 import { uploadBytes, getDownloadURL, ref } from "firebase/storage";
 import { storage } from "@/firebase/firebase";
 import { useRouter } from "next/navigation";
-import { useDeleteUser } from "react-firebase-hooks/auth";
-import { useSignOut } from "react-firebase-hooks/auth";
+// import { useDeleteUser } from "react-firebase-hooks/auth";
+// import { useSignOut } from "react-firebase-hooks/auth";
 
 export default function SettingsPage() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [deleteUser] = useDeleteUser(auth);
-  const [signOut] = useSignOut(auth);
+  // const [deleteUser] = useDeleteUser(auth);
+  // const [signOut] = useSignOut(auth);
   const router = useRouter();
   const [user] = useAuthState(auth);
 
@@ -126,17 +126,17 @@ export default function SettingsPage() {
     }
   }
 
-  async function handleDeleteAccount() {
-    if (window.confirm("Are you sure you want to delete your account?")) {
-      try {
-        await deleteUser();
-        await signOut();
-        router.push("/");
-      } catch (error) {
-        window.prompt(error.message);
-      }
-    }
-  }
+  // async function handleDeleteAccount() {
+  //   if (window.confirm("Are you sure you want to delete your account?")) {
+  //     try {
+  //       await deleteUser();
+  //       await signOut();
+  //       router.push("/");
+  //     } catch (error) {
+  //       window.prompt(error.message);
+  //     }
+  //   }
+  // }
 
   return (
     <div className="container max-w-3xl mx-auto py-8 px-[5%]">
@@ -281,15 +281,14 @@ export default function SettingsPage() {
           />
         </span>
       </div>
-
       <div className="pt-2">
         <Button onClick={updateProfile}>Save</Button>
       </div>
-      <div className="pt-10">
+      {/* <div className="pt-10">
         <Button variant="destructive" onClick={() => handleDeleteAccount()}>
           Delete Account
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 }
