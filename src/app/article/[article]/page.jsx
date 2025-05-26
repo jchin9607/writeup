@@ -11,11 +11,11 @@ import fetchArticleData from "@/hooks/GetArticleData";
 export default async function page({ params }) {
   const param = await params;
 
-  const articleId = decodeURIComponent(param.article);
+  const articleId = decodeURIComponent(param?.article);
 
   const articleData = await fetchArticleData(articleId);
 
-  const sanitizedContent = DOMPurify.sanitize(articleData.content);
+  const sanitizedContent = DOMPurify.sanitize(articleData?.content);
 
   return (
     <div className=" flex justify-center w-full px-[5%] ">
@@ -39,11 +39,6 @@ export default async function page({ params }) {
 
             <article className="mx-auto prose w-full">
               <div>
-                {/* <img
-                  src={articleData.cover}
-                  alt="placeholder"
-                  className="mt-0 mb-8 aspect-video w-full rounded-lg object-cover"
-                /> */}
                 <ArticleInteractBar data={articleData} id={articleId} />
                 <Image
                   src={`${articleData.cover}`}
