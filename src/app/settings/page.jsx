@@ -15,10 +15,12 @@ import RefreshData from "@/hooks/RefreshData";
 import { uploadBytes, getDownloadURL, ref } from "firebase/storage";
 import { storage } from "@/firebase/firebase";
 import { useRouter } from "next/navigation";
+import { useDeleteUser } from "react-firebase-hooks/auth";
 
 export default function SettingsPage() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [deleteUser] = useDeleteUser(auth);
   const router = useRouter();
   const [user] = useAuthState(auth);
 
@@ -119,6 +121,13 @@ export default function SettingsPage() {
       setProfile({ ...profile, photoURL: url });
     } catch (error) {
       throw new Error(error);
+    }
+  }
+
+  function handleDeleteAccount() {
+    if (window.confirm("Are you sure you want to delete your account?")) {
+      deleteUser();
+      router.push("/");
     }
   }
 
@@ -268,6 +277,9 @@ export default function SettingsPage() {
 
       <div className="pt-2">
         <Button onClick={updateProfile}>Save</Button>
+      </div>
+      <div className="pt-10" onClick={() => handleDeleteAccount()}>
+        <Button variant="destructive">Delete Account</Button>
       </div>
     </div>
   );

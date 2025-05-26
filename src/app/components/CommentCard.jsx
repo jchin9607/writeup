@@ -9,31 +9,27 @@ import { useMemo } from "react";
 const CommentCard = ({ comment }) => {
   const [author, setAuthor] = useState(null);
   useEffect(() => {
-    try {
-      fetchProfile(comment.author).then((data) => setAuthor(data));
-    } catch (error) {
-      throw new Error(error);
-    }
+    fetchProfile(comment.author).then((data) => setAuthor(data));
   }, []);
 
   const memorizedCard = useMemo(() => {
     return (
       <div className="flex gap-3 items-center">
         <div>
-          <Link href={"/profile/" + comment.author}>
+          <Link href={"/profile/" + comment?.author}>
             <Avatar className="size-7 rounded-full">
               <AvatarImage
                 src={author?.photoURL}
                 alt="placeholder"
                 className="object-cover"
               />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>AN</AvatarFallback>
             </Avatar>
           </Link>
         </div>
         <div>
-          <Link href={"/profile/" + comment.author}>
-            <p className="font-semibold">{author?.fullName || "loading"}</p>
+          <Link href={"/profile/" + comment?.author}>
+            <p className="font-semibold">{author?.fullName || "Anonymous"}</p>
           </Link>
           <p>{comment.comment}</p>
         </div>
