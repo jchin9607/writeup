@@ -58,7 +58,11 @@ const ProfileControl = () => {
       {user && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Avatar className="cursor-pointer">
+            <Avatar
+              className="cursor-pointer"
+              aria-label="open profile settings button"
+              role="button"
+            >
               <AvatarImage
                 src={profilePic}
                 alt="@shadcn"

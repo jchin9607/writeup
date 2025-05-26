@@ -71,7 +71,7 @@ export default async function Feed() {
         className="grid gap-y-10 sm:grid-cols-12 sm:gap-y-12 md:gap-y-16 lg:gap-y-20"
         id="feed"
       >
-        {posts.map((post) => (
+        {posts.map((post, index) => (
           <Card
             key={post.id}
             className="order-last border-0 bg-transparent shadow-none sm:order-first sm:col-span-12 lg:col-span-10 lg:col-start-2"
@@ -119,15 +119,30 @@ export default async function Feed() {
               <div className="order-first sm:order-last sm:col-span-5">
                 <Link href={post.url} className="block">
                   <div className="aspect-[16/9] overflow-clip rounded-lg border border-border">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      width={800}
-                      height={600}
-                      placeholder="blur"
-                      blurDataURL="/blur.jpg"
-                      className="h-full w-full object-cover transition-opacity duration-200 fade-in hover:opacity-70"
-                    />
+                    {index !== 0 && (
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        width={800}
+                        height={600}
+                        placeholder="blur"
+                        blurDataURL="/blur.jpg"
+                        className="h-full w-full object-cover transition-opacity duration-200 fade-in hover:opacity-70"
+                      />
+                    )}
+                    {index === 0 && (
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        width={800}
+                        height={600}
+                        placeholder="blur"
+                        blurDataURL="/blur.jpg"
+                        priority
+                        loading="eager"
+                        className="h-full w-full object-cover transition-opacity duration-200 fade-in hover:opacity-70"
+                      />
+                    )}
                   </div>
                 </Link>
               </div>

@@ -29,7 +29,11 @@ const NavbarSignedOut = () => {
       {user && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SquarePen className="cursor-pointer" />
+            <SquarePen
+              className="cursor-pointer"
+              aria-label="open write options menu"
+              role="button"
+            />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
             <DropdownMenuGroup>

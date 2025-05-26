@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /write/
+Disallow: /drafts/
+Disallow: /settings/
+Disallow: /accountcreated/
+Disallow: /auth/
