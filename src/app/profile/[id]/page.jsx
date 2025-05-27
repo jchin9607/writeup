@@ -13,6 +13,16 @@ import { fetchProfile } from "@/hooks/GetUserData";
 import WrittenBlogs from "./WrittenBlogs";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
+export const generateMetadata = async ({ params }) => {
+  const param = await params;
+  const id = decodeURIComponent(param?.id);
+  const data = await fetchProfile(id);
+  return {
+    title: data.fullName + " | writeup.",
+    description: data.bio,
+  };
+};
+
 // export const fetchProfile = async (id) => {
 //   "use cache";
 

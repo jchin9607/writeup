@@ -1,9 +1,15 @@
 import Feed from "../components/Feed";
 
+export const metadata = {
+  title: "Discover | writeup.",
+  description:
+    "Discover the latest insights, articles, and resources from our talented community.",
+};
+
 const page = () => {
   const heading = "Blog Posts";
   const description =
-    "Discover the latest insights, articles, and resources from our talent community.";
+    "Discover the latest insights, articles, and resources from our talented community.";
   return (
     <div className=" flex justify-center w-full px-[5%] ">
       <section className="py-32">

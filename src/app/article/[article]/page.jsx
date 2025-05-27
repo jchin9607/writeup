@@ -8,6 +8,16 @@ import DOMPurify from "isomorphic-dompurify";
 import Author from "./Author";
 import fetchArticleData from "@/hooks/GetArticleData";
 
+export const generateMetadata = async ({ params }) => {
+  const param = await params;
+  const articleId = decodeURIComponent(param?.article);
+  const articleData = await fetchArticleData(articleId);
+  return {
+    title: articleData.title + " | writeup.",
+    description: articleData.description,
+  };
+};
+
 export default async function page({ params }) {
   const param = await params;
 
