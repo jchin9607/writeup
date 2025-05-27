@@ -4,9 +4,9 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <div>
-      <div className="h-[60px] flex flex-col px-[5%] justify-between mt-[auto] w-full">
+      <div className="min-h-[60px] sm:h-[60px] flex flex-col px-[5%]   justify-between mt-[auto] w-full">
         <div className="h-[1px] bg-muted"></div>
-        <div className="flex items-center w-full h-full justify-center gap-10 text-neutral-500 dark:text-neutral-400">
+        <div className="flex sm:flex-row flex-col items-center w-full h-full justify-center gap-10 text-neutral-500 dark:text-neutral-400 py-10 sm:py-0">
           <Link
             href="https://hcb.hackclub.com/donations/start/writeup"
             target="_blank"
