@@ -94,14 +94,14 @@ export default async function Feed() {
                   {post.summary}
                 </p>
                 <div className="mt-6 flex items-center space-x-4 text-sm md:mt-8">
-                  <span className="text-muted-foreground">
+                  {/* <span className="text-muted-foreground">
                     {post.likeCount} Likes
                   </span>
                   <span className="text-muted-foreground">•</span>
                   <span className="text-muted-foreground">
                     {post.commentCount} Comments
                   </span>
-                  <span className="text-muted-foreground">•</span>
+                  <span className="text-muted-foreground">•</span> */}
                   <span className="text-muted-foreground">
                     {post.published}
                   </span>
