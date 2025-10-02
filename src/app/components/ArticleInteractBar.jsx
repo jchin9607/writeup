@@ -103,13 +103,13 @@ const ArticleInteractBar = ({ data, id }) => {
               onClick={() => handleLike()}
             />
           )}
-          <span className="text-muted-foreground ">{likes || 0}</span>
+          {/* <span className="text-muted-foreground ">{likes || 0}</span> */}
         </div>
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <CommentsButton comments={data.comments} user={user} id={id} />
 
           <span className="text-muted-foreground">{comments || 0}</span>
-        </div>
+        </div> */}
       </div>
 
       <div className="bg-muted h-[1px]"></div>

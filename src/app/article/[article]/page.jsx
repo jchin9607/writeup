@@ -49,7 +49,7 @@ export default async function page({ params }) {
 
             <article className="mx-auto prose w-full">
               <div>
-                {/* <ArticleInteractBar data={articleData} id={articleId} /> */}
+                <ArticleInteractBar data={articleData} id={articleId} />
                 <Image
                   src={`${articleData.cover}`}
                   alt="placeholder"
