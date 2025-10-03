@@ -69,12 +69,12 @@ const ArticleInteractBar = ({ data, id }) => {
         <div className="flex items-center  gap-6">
           <div className="flex items-center gap-2">
             <Heart className="h-6 w-6" />
-            <span className="text-muted-foreground ">{likes || 0}</span>
+            {/* <span className="text-muted-foreground ">{likes || 0}</span> */}
           </div>
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <MessageSquarePlus className="h-6 w-6" />
             <span className="text-muted-foreground">{comments || 0}</span>
-          </div>
+          </div> */}
         </div>
 
         <div className="bg-muted h-[1px]"></div>
