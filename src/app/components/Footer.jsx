@@ -13,7 +13,7 @@ const Footer = () => {
           >
             Donate
           </Link>
-          <Link href="https://forms.gle/X9bYG5JYJnMMrLy56" target="_blank">
+          <Link href="/join">
             Join
           </Link>
           <Link href="https://discord.gg/xXaXAjEN47" target="_blank">
