@@ -1,3 +1,7 @@
+## This is the nextjs version (or version 2) of writeup
+
+original repo => https://github.com/jchin9607/nwsppr
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
