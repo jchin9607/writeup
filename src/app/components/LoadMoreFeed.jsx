@@ -19,7 +19,7 @@ import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
-const LoadMoreFeed = ({ lastDoc }) => {
+const LoadMoreFeed = ({ lastDoc, sortNew }) => {
   const [articles, setArticles] = useState([]);
   const [lastDocument, setLastDocument] = useState(null);
   const [showLoadMore, setShowLoadMore] = useState(true);
@@ -39,7 +39,7 @@ const LoadMoreFeed = ({ lastDoc }) => {
     const q = query(
       collection(db, "articles"),
       where("draft", "==", false),
-      orderBy("likeCount", "desc"),
+      ...(sortNew ? [orderBy("date", "desc")] : [orderBy("likeCount", "desc")]),
       limit(5),
       startAfter(temp)
     );

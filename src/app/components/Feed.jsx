@@ -7,8 +7,9 @@ import Link from "next/link";
 import Image from "next/image";
 import LoadMoreFeed from "./LoadMoreFeed";
 import GetFeed from "@/hooks/GetFeed";
+import GetNewFeed from "@/hooks/GetNewFeed";
 
-export default async function Feed() {
+export default async function Feed({ sortNew, sortFollowing }) {
   // const lastDoc = null;
   // const lastDoc = posts[posts.length - 1];
 
@@ -63,7 +64,7 @@ export default async function Feed() {
   //     },
   //   ];
 
-  const posts = await GetFeed();
+  const posts = sortNew ? await GetNewFeed() : await GetFeed();
 
   return (
     <>
@@ -150,7 +151,7 @@ export default async function Feed() {
           </Card>
         ))}
       </div>
-      <LoadMoreFeed lastDoc={posts[posts.length - 1].id} />
+      <LoadMoreFeed lastDoc={posts[posts.length - 1].id} sortNew={sortNew} />
     </>
   );
 }

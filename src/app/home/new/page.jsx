@@ -1,15 +1,15 @@
-import Feed from "../components/Feed";
+import Feed from "../../components/Feed";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Discover Trending | writeup.",
+  title: "Discover New | writeup.",
   description:
     "Discover the latest insights, articles, and resources from our talented community.",
 };
 
 const page = () => {
-  const heading = "Trending Blog Posts";
+  const heading = "New Blog Posts";
   const description =
     "Discover the latest insights, articles, and resources from our talented community.";
   return (
@@ -25,17 +25,16 @@ const page = () => {
             </p>
           </div>
           <div className="flex flex-row justify-start gap-4">
-            <Link href={"/home/new"}>
+            <Link href={"/home"}>
               <Button className="cursor-pointer hover:underline">
-                View new posts
+                View trending posts
               </Button>
             </Link>
-
             {/* <Button className="cursor-pointer hover:underline">
               View new posts from following
             </Button> */}
           </div>
-          <Feed sortNew={false} sortFollowing={false} />
+          <Feed sortNew={true} sortFollowing={false} />
         </div>
       </section>
     </div>
